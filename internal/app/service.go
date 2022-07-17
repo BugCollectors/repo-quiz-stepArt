@@ -1,13 +1,13 @@
 package app
 
 import (
-	"database/sql"
 	"github.com/go-chi/chi/v5"
+	"github.com/jmoiron/sqlx"
 )
 
 type Service struct {
 	Ip     string
 	Port   string
 	Router *chi.Mux
-	DB     *sql.DB
+	DB     *sqlx.DB
 }
