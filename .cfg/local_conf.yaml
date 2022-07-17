@@ -1,0 +1,11 @@
+port: "8000"
+
+db:
+  POSTGRES_USERNAME: "postgres"
+  POSTGRES_PASSWORD: "qwerty"
+  POSTGRES_HOST: "localhost"
+  POSTGRES_PORT: "5436"
+  POSTGRES_DBNAME: "postgres"
+  POSTGRES_SSLMODE: "disable"
+
+
