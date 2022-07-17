@@ -19,7 +19,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createNewService() *app.Service {
+func createNewService() (*app.Service, error) {
 	s := &app.Service{}
 
 	s.Router = chi.NewRouter()
@@ -28,9 +28,12 @@ func createNewService() *app.Service {
 	s.Router.Method("PUT", "/put", Handler(s.Put))
 	s.Router.Method("DELETE", "/delete", Handler(s.Delete))
 
-	s.Cfg = cfg.ParseConfig()
+	err := cfg.ParseConfig()
+	if err != nil {
+		return nil, err
+	}
 
 	s.DB = db.CreateDB()
 
-	return s
+	return s, nil
 }

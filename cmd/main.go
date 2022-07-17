@@ -10,6 +10,9 @@ import (
 //3. Метод записи
 
 func main() {
-	service := createNewService()
+	service, err := createNewService()
+	if err != nil {
+		log.Fatalln(err)
+	}
 	log.Fatalln(http.ListenAndServe(":3333", service.Router))
 }
