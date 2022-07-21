@@ -7,16 +7,25 @@ import (
 
 //type Handler func(w http.ResponseWriter, r *http.Request) error
 
-type Router struct {
-	Router   *chi.Mux
+type Handler struct {
 	services *service.Service
 }
 
-func NewHandler(services *service.Service) *Router {
-	return &Router{services: services}
+func NewHandler(services *service.Service) *Handler {
+	return &Handler{services: services}
 }
 
-func (h *Router) InitRoutes() {
-	h.Router = chi.NewRouter()
-	h.Router.Post("/post", h.services.CreateUser)
+func (h *Handler) InitRoutes() chi.Router {
+	r := chi.NewRouter()
+
+	r.Route("/user", func(r chi.Router) {
+		r.Post("/post", h.createUser) // "/user/post"
+
+		//r.Route("/{id}", func(r chi.Router) {
+		r.Get("/", h.getUser)
+		//})
+
+	})
+
+	return r
 }

@@ -31,9 +31,9 @@ func main() {
 	service := service2.NewService(repo)
 	handler := handler2.NewHandler(service)
 
-	handler.InitRoutes()
+	router := handler.InitRoutes()
 
-	log.Fatalln(http.ListenAndServe(":3333", handler.Router))
+	log.Fatalln(http.ListenAndServe(":3333", router))
 }
 
 func initConfig() error {

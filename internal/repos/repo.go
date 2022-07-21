@@ -1,9 +1,13 @@
 package repos
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	"study/internal/types"
+)
 
 type RepoUser interface {
-	CreateUser()
+	CreateUser(user types.User) (int, error)
+	GetUser(id interface{}) (*types.User, error)
 	DeleteUser()
 }
 

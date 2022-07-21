@@ -1,7 +1,7 @@
 docker run --name=todo-db -e POSTGRES_PASSWORD='qwerty' -p 5436:5432 -d --rm postgres
 
 ## connect to postgres
-# docker exec -it 5962fe82b632 /bin/bash
+# docker exec -it 30db055754df /bin/bash
 
 ## create migrate file
 # migrate create -ext sql -dir ./migration -seq init

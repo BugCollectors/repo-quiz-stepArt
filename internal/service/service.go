@@ -1,12 +1,13 @@
 package service
 
 import (
-	"net/http"
 	"study/internal/repos"
+	"study/internal/types"
 )
 
 type UserServ interface {
-	CreateUser(w http.ResponseWriter, r *http.Request)
+	CreateUser(user types.User) (int, error)
+	GetUser(id interface{}) (*types.User, error)
 	DeleteUser()
 }
 
