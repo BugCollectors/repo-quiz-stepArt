@@ -1,8 +1,8 @@
-package app
+package app_layer
 
 import (
 	"github.com/go-chi/chi/v5"
-	"study/internal/db"
+	"study/internal/db_layer"
 )
 
 type Service struct {
@@ -13,5 +13,5 @@ type Service struct {
 }
 
 type Application struct {
-	ChepushilaRepository db.Chepushila
+	ChepushilaRepository db_layer.Chepushila
 }

@@ -3,12 +3,12 @@ version: '3.5'
 services:
   db:
     image: 'postgres:13.1-alpine'
-    container_name: db
+    container_name: db_layer
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=qwerty
-      - POSTGRES_DB=hardtry-db
+      - POSTGRES_DB=hardtry-db_layer
     ports:
       - 5432:5432
 
-# docker run --name=hardtry-db -e POSTGRES_DB=hardtry-db -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d --rm postgres
+# docker run --name=hardtry-db_layer -e POSTGRES_DB=hardtry-db_layer -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d --rm postgres

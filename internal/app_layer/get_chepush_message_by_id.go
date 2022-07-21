@@ -1,4 +1,4 @@
-package app
+package app_layer
 
 import (
 	"encoding/json"
@@ -7,9 +7,7 @@ import (
 )
 
 type GetChepushMessageByIDRequestBody struct {
-	ID      string `json:"id,omitempty"`
-	Title   string `json:"title,omitempty"`
-	Message string `json:"message,omitempty"`
+	ID string `json:"id,omitempty"`
 }
 
 func (app *Application) GetChepushMessageByID(w http.ResponseWriter, r *http.Request) error {
@@ -22,7 +20,7 @@ func (app *Application) GetChepushMessageByID(w http.ResponseWriter, r *http.Req
 		return err
 	}
 
-	err = app.ChepushilaRepository.SaveMessageFromChepush(r.Context(), body.ID, body.Title, body.Message)
+	err = app.ChepushilaRepository.GetChepushMessageByID(r.Context(), body.ID)
 	if err != nil {
 		return err
 	}

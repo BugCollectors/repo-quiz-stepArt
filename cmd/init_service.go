@@ -4,9 +4,9 @@ import (
 	"context"
 	"github.com/go-chi/chi/v5"
 	"net/http"
-	"study/internal/app"
+	"study/internal/app_layer"
 	"study/internal/cfg"
-	"study/internal/db"
+	"study/internal/db_layer"
 )
 
 type Handler func(w http.ResponseWriter, r *http.Request) error
@@ -19,9 +19,9 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createNewService(ctx context.Context) (*app.Service, error) {
-	s := &app.Service{}
-	s.App = &app.Application{}
+func createNewService(ctx context.Context) (*app_layer.Service, error) {
+	s := &app_layer.Service{}
+	s.App = &app_layer.Application{}
 
 	s.Router = chi.NewRouter()
 	s.Router.Method("GET", "/get_chepush_message", Handler(s.App.GetChepushMessageByID))
@@ -33,8 +33,8 @@ func createNewService(ctx context.Context) (*app.Service, error) {
 		return nil, err
 	}
 
-	postgresConnection, err := db.CreateDB(ctx, config)
+	postgresConnection, err := db_layer.CreateDB(ctx, config)
 
-	s.App.ChepushilaRepository = db.NewChepushilaRepo(postgresConnection)
+	s.App.ChepushilaRepository = db_layer.NewChepushilaRepo(postgresConnection)
 	return s, nil
 }
