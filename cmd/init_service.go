@@ -34,13 +34,5 @@ func createNewService(ctx context.Context) (*app.Service, error) {
 	}
 
 	s.DB, err = db.CreateDB(ctx, config)
-	// make migrations
-	//if settings.Reload {
-	//	log.Printf("Start reloading database \n")
-	//	err := goose.DownTo(DB, ".", 0)
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
 	return s, nil
 }
