@@ -12,7 +12,7 @@ type PostBody struct {
 	Message string `json:"message,omitempty"`
 }
 
-func (app *Application) Post(w http.ResponseWriter, r *http.Request) error {
+func (app *Application) NewMessageFromChepush(w http.ResponseWriter, r *http.Request) error {
 	q := r.URL.Query().Get("err")
 
 	body := &PostBody{}
@@ -22,7 +22,7 @@ func (app *Application) Post(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	err = app.ChepushilaRepository.WriteMessageFromChepush(r.Context(), body.ID, body.Title, body.Message)
+	err = app.ChepushilaRepository.SaveMessageFromChepush(r.Context(), body.ID, body.Title, body.Message)
 	if err != nil {
 		return err
 	}

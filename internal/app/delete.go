@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (s *Application) Delete(w http.ResponseWriter, r *http.Request) error {
+func (s *Application) DeleteChepushMessageByID(w http.ResponseWriter, r *http.Request) error {
 	q := r.URL.Query().Get("err")
 
 	if q != "" {

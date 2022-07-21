@@ -6,7 +6,9 @@ import (
 )
 
 type Chepushila interface {
-	WriteMessageFromChepush(ctx context.Context, id, title, message string) error
+	SaveMessageFromChepush(ctx context.Context, id, title, message string) error
+	GetChepushMessageByID(ctx context.Context, id string) error
+	DeleteChepushMessageByID(ctx context.Context, id string) error
 }
 
 type ChepushilaRepo struct {
@@ -19,7 +21,7 @@ func NewChepushilaRepo(connection *pgx.Conn) *ChepushilaRepo {
 	}
 }
 
-func (ch *ChepushilaRepo) WriteMessageFromChepush(ctx context.Context, id, title, message string) error {
+func (ch *ChepushilaRepo) SaveMessageFromChepush(ctx context.Context, id, title, message string) error {
 	var index int
 	query := "INSERT INTO message_from_chepush (id, title, message) VALUES ($1, $2, $3) RETURNING id"
 	result, err := ch.DB.Query(ctx, query, id, title, message)
@@ -34,16 +36,32 @@ func (ch *ChepushilaRepo) WriteMessageFromChepush(ctx context.Context, id, title
 	return nil
 }
 
-//id int NOT NULL,
-//title text,
-//body text,
-//PRIMARY KEY(id)
-//
-//result, err := tx.Query(ctx, query, displayName)
-//if err == nil {
-//defer result.Close()
-//if result.Next() {
-//err = result.Scan(&id)
-//}
-//}
-//return nil
+func (ch *ChepushilaRepo) GetChepushMessageByID(ctx context.Context, id, title, message string) error {
+	var index int
+	query := "INSERT INTO message_from_chepush (id, title, message) VALUES ($1, $2, $3) RETURNING id"
+	result, err := ch.DB.Query(ctx, query, id, title, message)
+	if err != nil {
+		return err
+	}
+
+	defer result.Close()
+	if result.Next() {
+		err = result.Scan(&index)
+	}
+	return nil
+}
+
+func (ch *ChepushilaRepo) DeleteChepushMessageByID(ctx context.Context, id, title, message string) error {
+	var index int
+	query := "INSERT INTO message_from_chepush (id, title, message) VALUES ($1, $2, $3) RETURNING id"
+	result, err := ch.DB.Query(ctx, query, id, title, message)
+	if err != nil {
+		return err
+	}
+
+	defer result.Close()
+	if result.Next() {
+		err = result.Scan(&index)
+	}
+	return nil
+}

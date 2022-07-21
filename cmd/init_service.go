@@ -24,10 +24,9 @@ func createNewService(ctx context.Context) (*app.Service, error) {
 	s.App = &app.Application{}
 
 	s.Router = chi.NewRouter()
-	s.Router.Method("GET", "/", Handler(s.App.Get))
-	s.Router.Method("POST", "/post", Handler(s.App.Post))
-	s.Router.Method("PUT", "/put", Handler(s.App.Put))
-	s.Router.Method("DELETE", "/delete", Handler(s.App.Delete))
+	s.Router.Method("GET", "/get_chepush_message", Handler(s.App.GetChepushMessageByID))
+	s.Router.Method("POST", "/new_message_from_chepush", Handler(s.App.NewMessageFromChepush))
+	s.Router.Method("DELETE", "/delete_chepush_message", Handler(s.App.DeleteChepushMessageByID))
 
 	config, err := cfg.LoadConfig()
 	if err != nil {
