@@ -21,12 +21,13 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func createNewService(ctx context.Context) (*app.Service, error) {
 	s := &app.Service{}
+	s.App = &app.Application{}
 
 	s.Router = chi.NewRouter()
-	s.Router.Method("GET", "/", Handler(s.Get))
-	s.Router.Method("POST", "/post", Handler(s.Post))
-	s.Router.Method("PUT", "/put", Handler(s.Put))
-	s.Router.Method("DELETE", "/delete", Handler(s.Delete))
+	s.Router.Method("GET", "/", Handler(s.App.Get))
+	s.Router.Method("POST", "/post", Handler(s.App.Post))
+	s.Router.Method("PUT", "/put", Handler(s.App.Put))
+	s.Router.Method("DELETE", "/delete", Handler(s.App.Delete))
 
 	config, err := cfg.LoadConfig()
 	if err != nil {
