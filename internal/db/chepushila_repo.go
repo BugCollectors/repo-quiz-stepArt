@@ -6,7 +6,7 @@ import (
 )
 
 type Chepushila interface {
-	WriteMessageFromChepush(ctx context.Context, title string, message string) error
+	WriteMessageFromChepush(ctx context.Context, id, title, message string) error
 }
 
 type ChepushilaRepo struct {
@@ -19,17 +19,17 @@ func NewChepushilaRepo(connection *pgx.Conn) *ChepushilaRepo {
 	}
 }
 
-func (ch *ChepushilaRepo) WriteMessageFromChepush(ctx context.Context, title string, message string) error {
-	var id int
-	query := "INSERT INTO message_from_chepush (title) VALUES ($1) (message) VALUES ($2) RETURNING id"
-	result, err := ch.DB.Query(ctx, query, title, message)
+func (ch *ChepushilaRepo) WriteMessageFromChepush(ctx context.Context, id, title, message string) error {
+	var index int
+	query := "INSERT INTO message_from_chepush (id, title, message) VALUES ($1, $2, $3) RETURNING id"
+	result, err := ch.DB.Query(ctx, query, id, title, message)
 	if err != nil {
 		return err
 	}
 
 	defer result.Close()
 	if result.Next() {
-		err = result.Scan(&id)
+		err = result.Scan(&index)
 	}
 	return nil
 }

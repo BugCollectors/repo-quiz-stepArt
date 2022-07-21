@@ -7,6 +7,7 @@ import (
 )
 
 type PostBody struct {
+	ID      string `json:"id,omitempty"`
 	Title   string `json:"title,omitempty"`
 	Message string `json:"message,omitempty"`
 }
@@ -21,7 +22,7 @@ func (app *Application) Post(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	err = app.ChepushilaRepository.WriteMessageFromChepush(r.Context(), body.Title, body.Message)
+	err = app.ChepushilaRepository.WriteMessageFromChepush(r.Context(), body.ID, body.Title, body.Message)
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-port: "8000"
+port: "3333"
 
 POSTGRES_USERNAME: "postgres"
 POSTGRES_PASSWORD: "qwerty"
