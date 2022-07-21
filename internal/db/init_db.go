@@ -1,28 +1,28 @@
 package db
 
 import (
+	"context"
 	"fmt"
-	"github.com/jmoiron/sqlx"
-	"github.com/spf13/viper"
-	"log"
+	"github.com/jackc/pgx/v4"
+	"study/internal/cfg"
 )
 
-func CreateDB() *sqlx.DB {
+func CreateDB(ctx context.Context, config *cfg.Config) (*pgx.Conn, error) {
 
 	connStr := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
-		fmt.Sprint(viper.Get("POSTGRES_HOST")),
-		fmt.Sprint(viper.Get("POSTGRES_PORT")),
-		fmt.Sprint(viper.Get("POSTGRES_USERNAME")),
-		fmt.Sprint(viper.Get("POSTGRES_PASSWORD")),
-		fmt.Sprint(viper.Get("POSTGRES_DBNAME")),
-		fmt.Sprint(viper.Get("POSTGRES_SSLMODE")),
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		config.PGHost,
+		config.PGPort,
+		config.PGUsername,
+		config.PGPassword,
+		config.PGDBName,
+		config.PGSSLMode,
 	)
 
-	db, err := sqlx.Open("postgres", connStr)
+	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return db
+	return conn, nil
 }

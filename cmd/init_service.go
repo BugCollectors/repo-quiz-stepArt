@@ -1,8 +1,8 @@
 package main
 
 import (
+	"context"
 	"github.com/go-chi/chi/v5"
-	"github.com/spf13/viper"
 	"net/http"
 	"study/internal/app"
 	"study/internal/cfg"
@@ -19,7 +19,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createNewService() (*app.Service, error) {
+func createNewService(ctx context.Context) (*app.Service, error) {
 	s := &app.Service{}
 
 	s.Router = chi.NewRouter()
@@ -28,12 +28,19 @@ func createNewService() (*app.Service, error) {
 	s.Router.Method("PUT", "/put", Handler(s.Put))
 	s.Router.Method("DELETE", "/delete", Handler(s.Delete))
 
-	err := cfg.ParseConfig()
+	config, err := cfg.LoadConfig()
 	if err != nil {
 		return nil, err
 	}
 
-	s.DB = db.CreateDB()
-
+	s.DB, err = db.CreateDB(ctx, config)
+	// make migrations
+	//if settings.Reload {
+	//	log.Printf("Start reloading database \n")
+	//	err := goose.DownTo(DB, ".", 0)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 	return s, nil
 }
