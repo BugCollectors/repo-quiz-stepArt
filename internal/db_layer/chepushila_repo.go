@@ -7,7 +7,7 @@ import (
 
 type Chepushila interface {
 	SaveMessageFromChepush(ctx context.Context, id, title, message string) error
-	GetChepushMessageByID(ctx context.Context, id string) error
+	GetChepushMessageByID(ctx context.Context, id string) (*ChepushMessage, error)
 	DeleteChepushMessageByID(ctx context.Context, id string) error
 }
 
