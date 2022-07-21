@@ -54,7 +54,11 @@ func (ch *ChepushilaRepo) GetChepushMessageByID(ctx context.Context, id string) 
 	if result.Next() {
 		err = result.Scan(&message.ID, &message.Title, &message.Message)
 	}
-	return message, nil
+	if err != nil {
+		return nil, err
+	}
+
+	return &message, nil
 }
 
 func (ch *ChepushilaRepo) DeleteChepushMessageByID(ctx context.Context, id string) error {
