@@ -33,6 +33,8 @@ func createNewService(ctx context.Context) (*app.Service, error) {
 		return nil, err
 	}
 
-	s.DB, err = db.CreateDB(ctx, config)
+	postgresConnection, err := db.CreateDB(ctx, config)
+
+	s.App.ChepushilaRepository = db.NewChepushilaRepo(postgresConnection)
 	return s, nil
 }

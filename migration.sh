@@ -9,5 +9,5 @@ PG_SSLMODE="disable"
 
 MIGRATIONS_DIR="./migrations"
 
-export PG_DSN="host=${PG_HOST} port=${PG_PORT} dbname=${PG_DBNAME} user=${PG_USERNAME} password=${PG_PASSWORD} ${PG_SSLMODE}=disable"
+export PG_DSN="host=${PG_HOST} port=${PG_PORT} dbname=${PG_DBNAME} user=${PG_USERNAME} password=${PG_PASSWORD} sslmode=${PG_SSLMODE}"
 goose -dir ${MIGRATIONS_DIR} postgres "${PG_DSN}" up -v

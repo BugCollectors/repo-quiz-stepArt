@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (s *Service) Get(w http.ResponseWriter, r *http.Request) error {
+func (s *Application) Get(w http.ResponseWriter, r *http.Request) error {
 	q := r.URL.Query().Get("err")
 
 	if q != "" {
